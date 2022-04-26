@@ -20,15 +20,14 @@ function WritePost() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const { user } = useContext(Context);
-  const [comment,setcomment] = useState("");
+  const [comment, setcomment] = useState("");
   const authAxios = (tkn) => {
     axios.create({
       headers: {
-        authorization: `Bearer ${tkn}`
-      }
-
-    })
-  }
+        authorization: `Bearer ${tkn}`,
+      },
+    });
+  };
 
   const onSubmitPost = async (e) => {
     e.preventDefault();
@@ -39,32 +38,32 @@ function WritePost() {
       category,
       comment,
     };
-
     if (file) {
+      console.log("hello");
       const formData = new FormData();
       const fileName = Date.now() + file.name;
       formData.append("name", fileName);
       formData.append("file", file);
       newPost.image = fileName;
       try {
-        await axios.post("http://localhost:4000/api/v3/upload", formData,
-          {
-            headers: {
-              authorization: `Bearer ${user.token}`
-            }
-
-          });
-      } catch (error) { }
+        await axios.post("http://localhost:4000/api/v3/upload", formData, {
+          headers: {
+            authorization: `Bearer ${user.token}`,
+          },
+        });
+      } catch (error) {}
       try {
         const { data } = await axios.post(
           "http://localhost:4000/api/v3/posts/post-create",
-          newPost, {
-          headers: {
-            authorization: `Bearer ${user.token}`
+          newPost,
+          {
+            headers: {
+              authorization: `Bearer ${user.token}`,
+            },
           }
-        });
+        );
         window.location.replace(`/posts/?user=${data.savePost.username}`);
-      } catch (error) { }
+      } catch (error) {}
     }
   };
 
