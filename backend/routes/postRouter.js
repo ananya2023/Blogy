@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const {
   getAllPosts,
   getPosts,
@@ -7,23 +7,22 @@ const {
   deletePost,
   createcomment,
   getcomment,
-} = require('../controllers/postController');
+} = require("../controllers/postController");
 
-const { admin } = require('../middleware/authMiddleware');
+const { admin } = require("../middleware/authMiddleware");
 
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.route('/').get(getAllPosts);
+router.route("/").get(getAllPosts);
 
-router.route('/:id').get(getPosts);
+router.route("/:id").get(getPosts);
 
-router.route('/post-create').post(protect, createPost);
- 
-router.route('/:id').post(protect,createcomment); //?
+router.route("/post-create").post(protect, createPost);
 
+router.route("/").post(createcomment); //?
 
 // router.route('/:id').get(protect,getcomment);
 
-module.exports = router;
+module.exports =  router ;
